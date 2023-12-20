@@ -1,0 +1,28 @@
+add settimeout function in frontend to cart functionality
+
+
+
+cartRouter.post('/addToCart/:product',async(req,res)=>{
+    try{
+        const {quantity}= req.body;
+        const productID= req.params.product;
+        const userId= req.user;
+        const user = await UserModel.findById(userId);
+        const product = await ProductModel.findById(productID);
+        console.log(user,product)
+        let cart= await cartModel.findOne({user:userId});
+        if(!cart){
+            cart=new cartModel({user:userId, items:[]})
+        }
+        const existItem= cart.items.find(item=>item.product.equals(productID));
+        if(existItem){
+            existItem.quantity += quantity||1;
+        }else{
+            cart.items.push({product:productID,quantity:quantity||1})
+        }
+        await cart.save();
+        res.json(cart);
+    }catch(err){
+        res.status(400).send({"message":err.message})
+    }
+})
