@@ -25,7 +25,6 @@ BuyRouter.post('/cart', async (req, res) => {
         const userId = req.body.userId;
         const user = await UserModel.findById(userId);
         const product = await ProductModel.findById(productID);
-        console.log(user, product)
         if (userId == product.sellerId) {
             return res.status(400).send("Seller can't buy back");
         }
@@ -86,8 +85,7 @@ BuyRouter.post('/order', async (req, res) => {
         await order.save();
         res.json({ order });
     } catch (err) {
-        console.error(err);
-        res.status(500).send({ message: 'Internal server error' });
+        res.status(500).send({ message: err.message });
     }
 });
 

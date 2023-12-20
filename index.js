@@ -13,7 +13,7 @@ app.use("/users",UserRouter);
 app.use("/products",ProductRouter);
 app.use("/buy",BuyRouter)
 
-app.listen(3000,async()=>{
+app.listen(8080,async()=>{
     try{
         await connection;
         console.log("connected, running on 3000")
