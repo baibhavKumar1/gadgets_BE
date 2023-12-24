@@ -17,13 +17,13 @@ ProductRouter.get('/', async (req, res) => {
 })
 
 ProductRouter.post('/add', async (req, res) => {
-    const { name, price, desc, quantity, userId } = req.body;
+    const { name, price, desc, quantity,image, userId } = req.body;
     try {
         const verify = await ProductModel.findOne({ name: { $regex: new RegExp('^' + name + '$', 'i') } });
         if (verify) {
             res.status(400).json({ message: "Product already exists" });
         } else {
-            const newProduct = new ProductModel({ name, price, desc, quantity, sellerId: userId });
+            const newProduct = new ProductModel({ name, price,image, desc, quantity, sellerId: userId });
             await newProduct.save()
             res.status(200).send({ message: "Product added", newProduct })
         }

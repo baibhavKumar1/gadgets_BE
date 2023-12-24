@@ -7,6 +7,7 @@ const productSchema= new mongoose.Schema(
         desc:String,
         quantity:{type:Number,default:1},
         sellerId:String,
+        image:String,
         AdminDiscount:{type:Number,default:0},
         SellerDiscount:{type:Number,default:0}
     },
